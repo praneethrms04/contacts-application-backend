@@ -1,4 +1,5 @@
 const express = require("express");
+const router = express.Router();
 const {
   getContacts,
   getContact,
@@ -6,7 +7,7 @@ const {
   updateContact,
   deleteContact,
 } = require("../controlers/contactControllers");
-const router = express.Router();
+const validateToken = require("../middleware/validateTokenHandler");
 
 // router.route("/").get(getContacts);
 
@@ -18,6 +19,8 @@ const router = express.Router();
 
 // router.route("/:id").delete(deleteContact);
 
+// to protect all routes private :
+router.use(validateToken)
 router.route("/").get(getContacts).post(postContact);
 router.route("/:id").get(getContact).put(updateContact).delete(deleteContact);
 
